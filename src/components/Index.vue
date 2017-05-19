@@ -1,10 +1,60 @@
 <template>
   <q-layout>
     <div slot="header" class="toolbar">
+      <button class="hide-on-drawer-visible" @click="$refs.leftDrawer.open()">
+        <i>menu</i>
+      </button>
       <q-toolbar-title :padding="0">
         Vegapo
       </q-toolbar-title>
     </div>
+      <!-- Left side Drawer -->
+    <q-drawer ref="leftDrawer">
+      <div class="list platform-delimiter">
+        <div class="list-header">
+          Filtre
+        </div>
+        <div class="row">
+          <q-select
+            class="auto"
+            type="list"
+            v-model="selectedCategory"
+            :options="selectCategory"
+          ></q-select>
+        </div>
+        <br>
+        <div class="row">
+          <q-select
+            class="auto"
+            type="list"
+            v-model="selectedSupermarket"
+            :options="selectSupermarket"
+          ></q-select>
+        </div>
+        <br>
+        <div class="row">
+          <q-select
+            class="auto"
+            type="list"
+            v-model="selectedTag"
+            :options="selectTag"
+          ></q-select>
+        </div>
+        <br>
+        <div class="row">
+          <q-search v-model="currentSearch"></q-search>
+        </div>
+        <br>
+        <div class="row">
+          <button class="primary" @click="updateQuery()">
+            Filter
+          </button>
+        </div>
+
+      </div>
+    </q-drawer>
+
+
 
     <!--
       Replace following "div" with
@@ -23,7 +73,7 @@
         <q-pagination
           v-model="currentPage"
           :max="numberOfPages"
-          @input="alert('123')"
+          @input="updateQuery()"
         ></q-pagination>
       </div>
     </div>
@@ -37,8 +87,15 @@ export default {
   data () {
     return {
       products: {},
-      currentPage: 0,
-      numberOfPages: 0
+      currentPage: 1,
+      numberOfPages: 0,
+      selectedCategory: '',
+      selectCategory: [],
+      selectedSupermarket: '',
+      selectSupermarket: [],
+      selectedTag: '',
+      selectTag: [],
+      currentSearch: ''
     }
   },
   computed: {
@@ -46,36 +103,61 @@ export default {
   },
   methods: {
     fetchProducts (query) {
+      this.products = {}
       var url = 'http://vegapo.dev.sk/api/produkty'
       if (query) {
         url += query
       }
 
+      console.log(url)
+
       axios.get(url).then(response => {
         console.log(response.data)
         this.products = response.data.products
-
-        if (this.currentPage === 0) {
-          this.currentPage = response.data.current_page
-          this.numberOfPages = response.data.number_of_pages
+        response.data.categories.forEach(this.addCategory)
+        response.data.supermarkets.forEach(this.addSupermarket)
+        response.data.tags.forEach(this.addTag)
+        if (this.currentPage === 0 || this.numberOfPages !== response.data.number_of_pages) {
+          this.currentPage = parseInt(response.data.current_page)
+          this.numberOfPages = parseInt(response.data.number_of_pages)
         }
-
       }).catch(e => {
         console.log(e)
       })
     },
-    alert (text) {
-      this.fetchProducts('?p=' + this.currentPage)
+    updateQuery () {
+      this.fetchProducts('?p=' + this.currentPage + '&supermarket=' + this.selectedSupermarket + '&kategoria=' + this.selectedCategory + '&tag=' + this.selectedTag + '&hladat=' + this.currentSearch)
+    },
+    addCategory (category) {
+      var c = {}
+      c.label = category.name
+      c.value = category.slug
+      this.selectCategory.push(c)
+    },
+    addSupermarket (supermarket) {
+      var c = {}
+      c.label = supermarket.name
+      c.value = supermarket.slug
+      this.selectSupermarket.push(c)
+    },
+    addTag (tag) {
+      var c = {}
+      c.label = tag.name
+      c.value = tag.slug
+      this.selectTag.push(c)
     }
   },
   mounted () {
     this.fetchProducts()
+    this.selectSupermarket.push({label: 'Všetky Supermarkety', value: ''})
+    this.selectCategory.push({label: 'Všetky Kategórie', value: ''})
+    this.selectTag.push({label: 'Všetky Tagy', value: ''})
   },
   beforeDestroy () {
   }
 }
 </script>
 
-<style lang="css">
+<style lang="sass">
 
 </style>
