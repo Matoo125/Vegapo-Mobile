@@ -104,7 +104,7 @@ export default {
   methods: {
     fetchProducts (query) {
       this.products = {}
-      var url = 'http://vegapo.dev.sk/api/produkty'
+      var url = 'https://vegapo.sk/api/produkty'
       if (query) {
         url += query
       }
@@ -118,7 +118,7 @@ export default {
         response.data.supermarkets.forEach(this.addSupermarket)
         response.data.tags.forEach(this.addTag)
         if (this.currentPage === 0 || this.numberOfPages !== response.data.number_of_pages) {
-          this.currentPage = parseInt(response.data.current_page)
+          this.currentPage = 1
           this.numberOfPages = parseInt(response.data.number_of_pages)
         }
       }).catch(e => {
