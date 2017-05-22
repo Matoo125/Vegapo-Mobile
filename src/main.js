@@ -9,8 +9,10 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 import Vue from 'vue'
 import Quasar from 'quasar'
 import router from './router'
+import VueProgressiveImage from 'vue-progressive-image'
 
 Vue.use(Quasar) // Install Quasar Framework
+Vue.use(VueProgressiveImage)
 
 Quasar.start(() => {
   /* eslint-disable no-new */

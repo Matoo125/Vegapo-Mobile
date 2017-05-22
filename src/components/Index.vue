@@ -65,7 +65,7 @@
       <div>
         <h2>Hello and Welcome</h2>
         <div class="card" v-for="product in products">
-          <img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image">
+          <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
           <div class="card-content">
             {{ product.name }}
           </div>
@@ -73,7 +73,7 @@
         <q-pagination
           v-model="currentPage"
           :max="numberOfPages"
-          @input="updateQuery()"
+          @input="updateQuery(true)"
         ></q-pagination>
       </div>
     </div>
@@ -82,6 +82,7 @@
 
 <script>
 import axios from 'axios'
+import { Loading } from 'quasar'
 
 export default {
   data () {
@@ -103,6 +104,9 @@ export default {
   },
   methods: {
     fetchProducts (query) {
+      Loading.show({
+        delay: 0 // milliseconds
+      })
       this.products = {}
       var url = 'https://vegapo.sk/api/produkty'
       if (query) {
@@ -124,9 +128,14 @@ export default {
       }).catch(e => {
         console.log(e)
       })
+      Loading.hide()
     },
-    updateQuery () {
-      this.fetchProducts('?p=' + this.currentPage + '&supermarket=' + this.selectedSupermarket + '&kategoria=' + this.selectedCategory + '&tag=' + this.selectedTag + '&hladat=' + this.currentSearch)
+    updateQuery (page = null) {
+      var q = '?supermarket=' + this.selectedSupermarket + '&kategoria=' + this.selectedCategory + '&tag=' + this.selectedTag + '&hladat=' + this.currentSearch
+      if (page) {
+        q += '&p=' + this.currentPage
+      }
+      this.fetchProducts(q)
     },
     addCategory (category) {
       var c = {}
