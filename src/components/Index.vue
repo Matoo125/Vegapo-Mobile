@@ -1,19 +1,7 @@
 <template>
   <q-layout>
-    <div slot="header" class="toolbar">
-      <button class="hide-on-drawer-visible" @click="$refs.leftDrawer.open()">
-        <i>menu</i>
-      </button>
-      <q-toolbar-title :padding="0">
-        Vegapo
-      </q-toolbar-title>
-    </div>
-      <!-- Left side Drawer -->
     <q-drawer ref="leftDrawer">
       <div class="list platform-delimiter">
-        <div class="list-header">
-          Filtre
-        </div>
         <div class="row">
           <q-select
             class="auto"
@@ -54,8 +42,6 @@
       </div>
     </q-drawer>
 
-
-
     <!--
       Replace following "div" with
       "<router-view class="layout-view">" component
@@ -64,10 +50,12 @@
     <div class="layout-view">
       <div>
         <h2>Hello and Welcome</h2>
-        <div class="card" v-for="product in products">
-          <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
-          <div class="card-content">
-            {{ product.name }}
+        <div class="row wrap gutter sm-column">
+          <div class="card product width-1of5" v-for="product in products">
+            <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
+            <div class="card-content">
+              {{ product.name }}
+            </div>
           </div>
         </div>
         <q-pagination
@@ -167,6 +155,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
-
+<style lang="scss" scoped>
+.product {
+  max-width: 450px !important
+}
 </style>

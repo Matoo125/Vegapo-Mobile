@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+  	<input v-model="username" placeholder="Type something">
+
+  	
+  </div>
 </template>
 
 <script>

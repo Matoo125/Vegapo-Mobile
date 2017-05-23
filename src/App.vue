@@ -1,7 +1,10 @@
 <template>
   <!-- Don't drop "q-app" class -->
   <div id="q-app">
-    <router-view></router-view>
+
+
+  	<Sceleton></Sceleton>
+     <!--  <router-view></router-view> -->
   </div>
 </template>
 
@@ -9,7 +12,12 @@
 /*
  * Root component
  */
-export default {}
+import Sceleton from 'components/Sceleton.vue'
+export default {
+  components: {
+    Sceleton
+  }
+}
 </script>
 
 <style></style>
