@@ -57,7 +57,6 @@
     -->
     <div class="layout-view">
       <div>
-        <h2>Hello and Welcome</h2>
         <div class="row wrap gutter sm-column">
           <div class="card product width-1of5" v-for="product in products">
             <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
