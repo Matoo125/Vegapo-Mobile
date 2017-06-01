@@ -1,5 +1,13 @@
 <template>
   <q-layout>
+    <div slot="header" class="toolbar">
+      <button class="hide-on-drawer-visible" @click="$refs.leftDrawer.open()">
+        <i>menu</i>
+      </button>
+      <q-toolbar-title :padding="0">
+        Vegapo
+      </q-toolbar-title>
+    </div>
     <q-drawer ref="leftDrawer">
       <div class="list platform-delimiter">
         <div class="row">

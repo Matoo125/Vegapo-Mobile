@@ -3,8 +3,9 @@
   <div id="q-app">
 
 
-  	<Sceleton></Sceleton>
-     <!--  <router-view></router-view> -->
+  	<Skeleton></Skeleton>
+
+
   </div>
 </template>
 
@@ -12,10 +13,10 @@
 /*
  * Root component
  */
-import Sceleton from 'components/Sceleton.vue'
+import Skeleton from 'components/Skeleton.vue'
 export default {
   components: {
-    Sceleton
+    Skeleton
   }
 }
 </script>

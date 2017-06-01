@@ -1,13 +1,13 @@
 <template>
   <q-layout>
-    <div slot="header" class="toolbar">
+    <!-- <div slot="header" class="toolbar">
       <button class="hide-on-drawer-visible" @click="$refs.leftDrawer.open()">
         <i>menu</i>
       </button>
       <q-toolbar-title :padding="0">
         Vegapo
       </q-toolbar-title>
-    </div>
+    </div>  -->
       <!-- Left side Drawer -->
   <!--   <q-drawer ref="leftDrawer">
       <div class="list platform-delimiter">
@@ -62,7 +62,22 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+    }
+  },
+  mounted () {
+    if (Object.keys(this.$store.state.supermarkets).length === 0) {
+      this.$store.commit('SET_SUPERMARKETS', 'hello')
+      alert('hi')
+    }
+    if (Object.keys(this.$store.state.categories).length === 0) {
+      this.$store.commit('SET_CATEGORIES', 'hello')
+      alert('hi')
+    }
+    if (Object.keys(this.$store.state.tags).length === 0) {
+      this.$store.commit('SET_TAGS', 'hello')
+      alert('hi')
+    }
   }
 }
 </script>
