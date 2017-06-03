@@ -5,11 +5,13 @@
       <div>
         <div class="row wrap gutter sm-column">
           <div class="card product width-1of5" v-for="product in products">
-            <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
-            <div class="card-content">
-              {{ product.name }}
+            <router-link :to="{name: 'product', params: {slug: product.slug}}">
+              <progressive-img :src="'https://www.vegapo.sk/uploads/products/sk/450x450/'+product.image" />
+              <div class="card-content">
+                {{ product.name }}
+              </div>
+            </router-link>
             </div>
-          </div>
         </div>
         <q-pagination
           v-model="selected.page"

@@ -1,9 +1,15 @@
 <template>
   <q-layout>
     <div slot="header" class="toolbar">
-      <button @click="$refs.leftDrawer.open()">
-        <i>menu</i>
-      </button>
+      <div v-if="index" >
+       <button @click="$refs.leftDrawer.open()">
+         <i>menu</i>
+       </button> 
+      </div>
+      <div v-else>
+        <button v-go-back="'/'"><i>keyboard_backspace</i></button>
+      </div>
+
       <q-toolbar-title :padding="0">
         Vegapo
       </q-toolbar-title>
@@ -73,6 +79,9 @@ export default {
     ])
   },
   computed: {
+    index () {
+      return this.$route.path === '/'
+    },
     choosenSupermarket: {
       get () {
         return this.$store.state.selected.supermarket
