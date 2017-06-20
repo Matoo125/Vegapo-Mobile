@@ -1,7 +1,7 @@
 <template>
   <div>
   	<div class="card">
-	  <img :src="'https:vegapo.sk/uploads/products/sk/' + product.image">
+	  <img :src="'https://vegapo.sk/uploads/products/sk/' + product.image">
 	  <div class="card-content">
 	    <h2>{{ product.name }}</h2>
 	    <p>{{ product.category }}</p>
